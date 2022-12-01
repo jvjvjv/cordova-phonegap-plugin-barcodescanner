@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:rim="http://www.blackberry.com/ns/widgets" id="phonegap-plugin-barcodescanner" version="8.1.1-dev">
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:rim="http://www.blackberry.com/ns/widgets" id="cordova-phonegap-plugin-barcodescanner" version="8.2.0">
   <name>BarcodeScanner</name>
   <description>You can use the BarcodeScanner plugin to scan different types of barcodes (using the device's camera) and get the metadata encoded in them for processing within your application.</description>
   <license>MIT</license>
   <repo>https://github.com/phonegap/phonegap-plugin-barcodescanner</repo>
   <issue>https://github.com/phonegap/phonegap-plugin-barcodescanner/issues</issue>
   <engines>
-    <engine name="cordova" version=">=7.1.0"/>
-    <engine name="cordova-android" version=">=6.3.0"/>
+    <engine name="cordova" version=">=11.0.0"/>
+    <engine name="cordova-android" version=">=11.0.0"/>
   </engines>
   <js-module src="www/barcodescanner.js" name="BarcodeScanner">
     <clobbers target="cordova.plugins.barcodeScanner"/>
@@ -45,21 +45,6 @@
     <framework src="com.android.support:support-v4:$ANDROID_SUPPORT_V4_VERSION"/>
     <lib-file src="src/android/barcodescanner-release-2.1.5.aar"/>
     <preference name="ANDROID_SUPPORT_V4_VERSION" default="27.+"/>
-  </platform>
-  <platform name="windows">
-    <js-module src="src/windows/BarcodeScannerProxy.js" name="BarcodeScannerProxy">
-      <merges target=""/>
-    </js-module>
-    <config-file target="package.appxmanifest" parent="/Package/Capabilities">
-      <DeviceCapability Name="webcam"/>
-    </config-file>
-    <framework src="src/windows/lib.UW/x86/ZXing.winmd" target-dir="x86" arch="x86" custom="true" versions=">8.1"/>
-    <framework src="src/windows/lib.UW/x64/ZXing.winmd" target-dir="x64" arch="x64" custom="true" versions=">8.1"/>
-    <framework src="src/windows/lib.UW/ARM/ZXing.winmd" target-dir="ARM" arch="ARM" custom="true" versions=">8.1"/>
-    <framework src="src/windows/lib/WinRTBarcodeReader.csproj" custom="true" type="projectReference" versions="&lt;=8.1"/>
-    <asset src="src/windows/assets/plugin-barcodeScanner.css" target="css/plugin-barcodeScanner.css"/>
-    <hook src="hooks/windows/check-arch.js" type="before_compile"/>
-    <hook src="hooks/windows/check-arch.js" type="before_run"/>
   </platform>
   <platform name="browser">
     <config-file target="config.xml" parent="/*">

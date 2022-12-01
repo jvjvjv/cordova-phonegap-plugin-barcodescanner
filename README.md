@@ -5,18 +5,17 @@
 
 Cross-platform BarcodeScanner for Cordova / PhoneGap.
 
-Follows the [Cordova Plugin spec](https://cordova.apache.org/docs/en/latest/plugin_ref/spec.html), so that it works with [Plugman](https://github.com/apache/cordova-plugman).
+<!--Follows the [Cordova Plugin spec](https://cordova.apache.org/docs/en/latest/plugin_ref/spec.html), so that it works with [Plugman](https://github.com/apache/cordova-plugman). -->
 
 ## Installation
 
+This plugin has been created with the specific intent of adding cordova-android@^11.0.0 functionality.
 
-This requires phonegap 7.1.0+ ( current stable v8.0.0 )
-
-    phonegap plugin add phonegap-plugin-barcodescanner
+    cordova plugin add cordova-phonegap-plugin-barcodescanner
 
 It is also possible to install via repo url directly ( unstable )
 
-    phonegap plugin add https://github.com/phonegap/phonegap-plugin-barcodescanner.git
+    phonegap plugin add https://github.com/jvjvjv/cordova-phonegap-plugin-barcodescanner.git
 
 Optional variables:
 This plugin requires the Android support library v4. The minimum version is `24.1.0`. Default value is `27.+`.  Check out the latest version [here](https://developer.android.com/topic/libraries/support-library/revisions.html).
@@ -27,32 +26,12 @@ phonegap plugin add phonegap-plugin-barcodescanner --variable ANDROID_SUPPORT_V4
 
 - Android
 - iOS
-- Windows (Windows/Windows Phone 8.1 and Windows 10)
 - Browser
 
 Note: the Android source for this project includes an Android Library Project.
 plugman currently doesn't support Library Project refs, so its been
 prebuilt as a jar library. Any updates to the Library Project should be
 committed with an updated jar.
-
-Note: Windows 10 applications can not be build for `AnyCPU` architecture, which is default for Windows platform. If you want to build/run Windows 10 app, you should specify target architecture explicitly, for example (Cordova CLI):
-
-```
-cordova run windows -- --archs=x86
-```
-
-### PhoneGap Build Usage
-
-Add the following to your config.xml:
-
-```
-<!-- add a version here, otherwise PGB will use whatever the latest version of the package on npm is -->
-<plugin name="phonegap-plugin-barcodescanner" />
-```
-On PhoneGap Build if you're using a version of cordova-android of 4 or less, ensure you're building with gradle:
-```
-<preference name="android-build-tool" value="gradle" />
-```
 
 ## Using the plugin ##
 The plugin creates the object `cordova.plugins.barcodeScanner` with the method `scan(success, fail)`.
@@ -108,6 +87,31 @@ A full example could be:
    );
 ```
 
+This plugin as of 8.2.0 now supports promises, so the above example would be written look more like:
+```js
+    const options = {
+      preferFrontCamera : true,
+      showFlipCameraButton : true,
+      showTorchButton : true,
+      torchOn: true,
+      saveHistory: true,
+      prompt : "It puts the scanner ni the box or else it gets a thousand mocks",
+      resultDisplayDuration: 500,
+      formats : "QR_CODE,PDF_417",
+      orientation : "landscape",
+      disableAnimations : true,
+      disableSuccessBeep: false
+    };
+    
+    cordova.plugins.barcodeScanner.scan(config)
+      .then(({ text, format, cancelled }) => {
+        alert(`We got a barcode\nResult: ${text}\nFormat: ${format}\nCancelled: ${cancelled}`);
+      })
+      .catch((error) => {
+        alert(`Scanning failed: ${error}`);
+      });
+```
+
 ## Encoding a Barcode ##
 
 The plugin creates the object `cordova.plugins.barcodeScanner` with the method `encode(type, data, success, fail)`.
@@ -119,16 +123,16 @@ Supported encoding types:
 * PHONE_TYPE
 * SMS_TYPE
 
-```
 A full example could be:
-
-   cordova.plugins.barcodeScanner.encode(cordova.plugins.barcodeScanner.Encode.TEXT_TYPE, "http://www.nytimes.com", function(success) {
-            alert("encode success: " + success);
-          }, function(fail) {
-            alert("encoding failed: " + fail);
-          }
-        );
+```js
+cordova.plugins.barcodeScanner.encode(cordova.plugins.barcodeScanner.Encode.TEXT_TYPE, "http://www.nytimes.com", function(success) {
+  alert("encode success: " + success);
+}, function(fail) {
+  alert("encoding failed: " + fail);
+});
 ```
+
+This method has also been overloaded with a method signature `encode(type, data)
 
 ## iOS quirks ##
 
@@ -145,16 +149,13 @@ To add this entry you can use the `edit-config` tag in the `config.xml` like thi
 </edit-config>
 ```
 
-## Windows quirks ##
+## Known Issues
 
-* Windows implementation currently doesn't support encode functionality.
-
-* On Windows 10 desktop ensure that you have Windows Media Player and Media Feature pack installed.
+* The JavaScript Source was hastily refactored to include support for promises, and as such always returns a promise. This will be rewritten in the future for better performance.
 
 ## Thanks on Github ##
 
-So many -- check out the original [iOS](https://github.com/phonegap/phonegap-plugins/tree/DEPRECATED/iOS/BarcodeScanner),  [Android](https://github.com/phonegap/phonegap-plugins/tree/DEPRECATED/Android/BarcodeScanner) and
-[BlackBerry 10](https://github.com/blackberry/WebWorks-Community-APIs/tree/master/BB10-Cordova/BarcodeScanner) repos.
+So many -- check out the [original](https://github.com/phonegap/phonegap-plugin-barcodescanner), which is based on the _original_ original  [iOS](https://github.com/phonegap/phonegap-plugins/tree/DEPRECATED/iOS/BarcodeScanner), and [Android](https://github.com/phonegap/phonegap-plugins/tree/DEPRECATED/Android/BarcodeScanner).
 
 ## Licence ##
 
