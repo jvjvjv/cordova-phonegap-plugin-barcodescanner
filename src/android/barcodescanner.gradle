@@ -6,10 +6,11 @@ repositories{
 }
 
 dependencies {
-    compile(name:'barcodescanner-release-2.1.5', ext:'aar')
+    implementation(name:'barcodescanner-release-2.1.5', ext:'aar')
 }
 
 android {
+    compileSdkVersion cordovaConfig.COMPILE_SDK_VERSION
     packagingOptions {
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/LICENSE'
